@@ -8,7 +8,7 @@ export class SocDashboard {
 
   public open(snapshot: AnalyticsSnapshot, records: AuditRecord[], trend7: number[], trend30: number[], efficiency?: OptimizationSummary): void {
     if (!this.panel) {
-      this.panel = vscode.window.createWebviewPanel("rocketAiShieldSoc", "Rocket AI Shield SOC Dashboard", vscode.ViewColumn.Beside, {
+      this.panel = vscode.window.createWebviewPanel("rocketAiShieldSoc", "Rocket - IPG SOC Dashboard", vscode.ViewColumn.Beside, {
         enableScripts: false
       });
       this.panel.onDidDispose(() => {

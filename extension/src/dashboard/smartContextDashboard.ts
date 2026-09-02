@@ -30,7 +30,7 @@ export class SmartContextDashboard {
     if (!this.panel) {
       this.panel = vscode.window.createWebviewPanel(
         "rocketAiShieldSmartContext",
-        "Rocket AI Shield Smart Context",
+        "Rocket - IPG Smart Context",
         vscode.ViewColumn.Active,
         { enableScripts: false }
       );
@@ -61,7 +61,7 @@ export class SmartContextDashboard {
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Rocket AI Shield Smart Context</title>
+  <title>Rocket - IPG Smart Context</title>
   <style>
     :root {
       --bg:#071223;

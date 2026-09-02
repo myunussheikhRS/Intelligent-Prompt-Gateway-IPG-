@@ -21,7 +21,7 @@ export class DashboardPanel {
       return;
     }
 
-    const panel = vscode.window.createWebviewPanel("rocketTokenDashboard", "Rocket AI shield Dashboard", vscode.ViewColumn.Two, {
+    const panel = vscode.window.createWebviewPanel("rocketTokenDashboard", "Rocket - IPG : Token Optimizer", vscode.ViewColumn.Two, {
       enableScripts: true,
       retainContextWhenHidden: true
     });
@@ -45,8 +45,7 @@ export class DashboardPanel {
 
   public render(): void {
     const records = this.store.getAll();
-    const summary = this.store.getSessionSummary();
-    this.panel.webview.html = buildDashboardHtml(records, summary);
+    this.panel.webview.html = buildDashboardHtml(records);
   }
 
   public static refresh(): void {

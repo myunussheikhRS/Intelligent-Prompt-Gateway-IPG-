@@ -24,7 +24,7 @@ export class DashboardPanel {
 
     const panel = vscode.window.createWebviewPanel(
       "rocketTokenDashboard",
-      "Rocket AI shield Dashboard",
+      "Rocket - IPG Dashboard",
       vscode.ViewColumn.Two,
       { enableScripts: true, retainContextWhenHidden: true }
     );

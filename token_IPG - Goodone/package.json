@@ -1,6 +1,6 @@
 {
   "name": "rocket-ai-shield",
-  "displayName": "Rocket AI shield",
+  "displayName": "Rocket - IPG",
   "description": "Reduces tokens in prompts sent to GitHub Copilot via smart context compression.",
   "version": "0.1.0",
   "publisher": "rocket-software",
@@ -14,55 +14,55 @@
     "commands": [
       {
         "command": "rocketToken.askOptimized",
-        "title": "Rocket AI shield: Ask Optimized"
+        "title": "Rocket - IPG: Ask Optimized"
       },
       {
         "command": "rocketToken.optimizeSelection",
-        "title": "Rocket AI shield: Optimize Selected Text"
+        "title": "Rocket - IPG: Optimize Selected Text"
       },
       {
         "command": "rocketToken.optimizeActiveFile",
-        "title": "Rocket AI shield: Optimize Active File Context"
+        "title": "Rocket - IPG: Optimize Active File Context"
       },
       {
         "command": "rocketToken.optimizeActiveFileFullContext",
-        "title": "Rocket AI shield: Optimize Active File (Full Context Demo)"
+        "title": "Rocket - IPG: Optimize Active File (Full Context Demo)"
       },
       {
         "command": "rocketToken.openDashboard",
-        "title": "Rocket AI shield: Open Token Dashboard"
+        "title": "Rocket - IPG: Open Token Dashboard"
       },
       {
         "command": "rocketToken.showReductionReport",
-        "title": "Rocket AI shield: Show Last Reduction Report"
+        "title": "Rocket - IPG: Show Last Reduction Report"
       },
       {
         "command": "rocketToken.configureBudgets",
-        "title": "Rocket AI shield: Configure Token Budgets"
+        "title": "Rocket - IPG: Configure Token Budgets"
       },
       {
         "command": "rocketToken.clearMetrics",
-        "title": "Rocket AI shield: Clear Metrics History"
+        "title": "Rocket - IPG: Clear Metrics History"
       },
       {
         "command": "rocketToken.analyzeFile",
-        "title": "Rocket AI shield: Analyze File (Query-Guided)"
+        "title": "Rocket - IPG: Optimize File (Query-Guided)"
       },
       {
         "command": "rocketToken.analyzeCurrentFile",
-        "title": "Rocket AI shield: Analyze Current File"
+        "title": "Rocket - IPG: Optimize Current File"
       }
     ],
     "chatParticipants": [
       {
         "id": "rocket-optimize",
         "name": "rocket-optimize",
-        "fullName": "Rocket AI shield",
+        "fullName": "Rocket - IPG",
         "description": "Reduces context tokens before sending your question to the model."
       }
     ],
     "configuration": {
-      "title": "Rocket AI shield",
+      "title": "Rocket - IPG",
       "properties": {
         "rocketToken.maxInputTokens": {
           "type": "number",
@@ -99,7 +99,7 @@
   },
   "scripts": {
     "clean": "powershell -NoProfile -Command \"if (Test-Path out) { Remove-Item -Recurse -Force out }; Get-ChildItem src -Recurse -Include *.js,*.js.map | Remove-Item -Force\"",
-    "vscode:prepublish": "npm run compile",
+    "vscode:prepublish": "npm.cmd run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./"
   },

@@ -37,7 +37,7 @@ export class GitScanner {
         highest: scanResult.highestScore
       };
     } catch {
-      vscode.window.showWarningMessage("AI DLP Guard: Unable to scan staged git diff.");
+      vscode.window.showWarningMessage("Rocket - IPG: Unable to scan staged git diff.");
       return { blocked: false, findings: 0, highest: 0 };
     }
   }
@@ -47,14 +47,14 @@ export class GitScanner {
 
     if (result.blocked) {
       vscode.window.showErrorMessage(
-        `AI DLP Guard blocked commit. ${result.findings} sensitive finding(s), highest score ${result.highest.toFixed(2)}.`
+        `Rocket - IPG blocked commit. ${result.findings} sensitive finding(s), highest score ${result.highest.toFixed(2)}.`
       );
       return;
     }
 
     if (result.findings > 0) {
       const proceed = await vscode.window.showWarningMessage(
-        `AI DLP Guard found ${result.findings} risky staged item(s). Highest score ${result.highest.toFixed(2)}. Continue commit?`,
+        `Rocket - IPG found ${result.findings} risky staged item(s). Highest score ${result.highest.toFixed(2)}. Continue commit?`,
         "Commit Anyway",
         "Cancel"
       );

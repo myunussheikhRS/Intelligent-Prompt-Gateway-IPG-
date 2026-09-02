@@ -20,7 +20,7 @@ export class DashboardPanel {
 
     this.panel = vscode.window.createWebviewPanel(
       "aiDlpGuardDashboard",
-      "AI DLP Guard Dashboard",
+      "Rocket - IPG Dashboard",
       vscode.ViewColumn.Beside,
       { enableScripts: false }
     );
@@ -47,7 +47,7 @@ export class DashboardPanel {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI DLP Guard Dashboard</title>
+  <title>Rocket - IPG Dashboard</title>
   <style>
     :root {
       --bg: #f5f7fb;

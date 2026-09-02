@@ -11,7 +11,7 @@ export class OptimizationReport {
         : "n/a";
 
     return [
-      "Rocket AI Shield - Context Optimization Report",
+      "Rocket - IPG - Context Optimization Report",
       `Timestamp: ${metric.timestamp}`,
       `Query: ${metric.query}`,
       `Files Processed: ${metric.filesProcessed}`,
@@ -30,7 +30,7 @@ export class OptimizationReport {
 
   public buildSummary(summary: OptimizationSummary): string {
     return [
-      "Rocket AI Shield - AI Efficiency Dashboard",
+      "Rocket - IPG - AI Efficiency Dashboard",
       `Total Runs: ${summary.totalRuns}`,
       `Total Tokens Processed: ${summary.totalTokensProcessed.toLocaleString()}`,
       `Optimized Tokens: ${summary.totalOptimizedTokens.toLocaleString()}`,

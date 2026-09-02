@@ -113,7 +113,7 @@ async function runOptimize(
   if (!query.trim()) return;
 
   await vscode.window.withProgress(
-    { location: vscode.ProgressLocation.Notification, title: "Rocket AI shield", cancellable: false },
+    { location: vscode.ProgressLocation.Notification, title: "Rocket - IPG", cancellable: false },
     async (progress) => {
       progress.report({ message: progressMessage });
 
@@ -238,7 +238,7 @@ export function activate(context: vscode.ExtensionContext): void {
       if (!query) return;
 
       await vscode.window.withProgress(
-        { location: vscode.ProgressLocation.Notification, title: "Rocket AI shield", cancellable: false },
+        { location: vscode.ProgressLocation.Notification, title: "Rocket - IPG", cancellable: false },
         async (progress) => {
           progress.report({ message: "Analyzing file with query context..." });
           const config = getConfig();
@@ -272,7 +272,7 @@ export function activate(context: vscode.ExtensionContext): void {
     })
   );
 
-  // Analyze Current File (Query-Guided) — skips file picker, uses active editor
+  // Optimize Current File (Query-Guided) — skips file picker, uses active editor
   context.subscriptions.push(
     vscode.commands.registerCommand("rocketToken.analyzeCurrentFile", async () => {
       const editor = vscode.window.activeTextEditor;
@@ -289,7 +289,7 @@ export function activate(context: vscode.ExtensionContext): void {
       if (!query) return;
 
       await vscode.window.withProgress(
-        { location: vscode.ProgressLocation.Notification, title: "Rocket AI shield", cancellable: false },
+        { location: vscode.ProgressLocation.Notification, title: "Rocket - IPG", cancellable: false },
         async (progress) => {
           progress.report({ message: "Analyzing file with query context..." });
           const config = getConfig();

@@ -119,7 +119,7 @@ export class HighlightManager {
   private hoverText(finding: Finding): vscode.MarkdownString {
     const markdown = new vscode.MarkdownString();
     markdown.isTrusted = false;
-    markdown.appendMarkdown(`**AI DLP Guard**\n\n`);
+    markdown.appendMarkdown(`**Rocket - IPG**\n\n`);
     markdown.appendMarkdown(`- Score: ${finding.score.toFixed(2)}\n`);
     markdown.appendMarkdown(`- Sources: ${finding.sources.join(", ")}\n`);
     if (finding.ruleName) {

@@ -8,7 +8,7 @@ export class AiEfficiencyDashboard {
     if (!this.panel) {
       this.panel = vscode.window.createWebviewPanel(
         "rocketAiShieldEfficiency",
-        "Rocket AI Shield AI Efficiency Dashboard",
+        "Rocket - IPG AI Efficiency Dashboard",
         vscode.ViewColumn.Beside,
         { enableScripts: false }
       );

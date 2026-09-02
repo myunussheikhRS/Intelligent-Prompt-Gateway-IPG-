@@ -102,7 +102,7 @@ export class PolicyEngine {
       const parsed = JSON.parse(raw) as Partial<PolicyConfig>;
       return parsed;
     } catch {
-      vscode.window.showWarningMessage("AI DLP Guard: Invalid security-config.json. Falling back to safe defaults.");
+      vscode.window.showWarningMessage("Rocket - IPG: Invalid security-config.json. Falling back to safe defaults.");
       return undefined;
     }
   }

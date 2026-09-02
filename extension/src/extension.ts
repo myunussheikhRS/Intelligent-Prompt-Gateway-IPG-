@@ -99,14 +99,14 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   };
 
   const statusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
-  statusBar.text = `Rocket AI Shield | Rules: ${REGEX_RULE_COUNT}`;
+  statusBar.text = `Rocket - IPG | Rules: ${REGEX_RULE_COUNT}`;
   statusBar.tooltip = "Protect AI. Optimize AI. Govern AI.";
   statusBar.command = "rocketAiShield.openExecutiveDashboard";
   statusBar.show();
   context.subscriptions.push(statusBar);
 
   const clipboardStatusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 120);
-  clipboardStatusBar.text = "Rocket AI Shield Clipboard Guard: Idle";
+  clipboardStatusBar.text = "Rocket - IPG Clipboard Guard: Idle";
   clipboardStatusBar.tooltip = "Clipboard middle-layer for Copilot chat: optimization + security.";
   clipboardStatusBar.command = "rocketAiShield.toggleCopilotClipboardGuard";
   clipboardStatusBar.hide();
@@ -116,7 +116,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     const records = auditEngine.getRecent(500);
     const effectiveRecords = records.length ? records : mockAssessmentRecords(userName, workspacePath ?? "workspace");
     const snapshot = analytics.build(effectiveRecords);
-    statusBar.text = `Rocket AI Shield | Score: ${snapshot.unifiedSecurityScore.score}/100 | Rules: ${REGEX_RULE_COUNT}`;
+    statusBar.text = `Rocket - IPG | Score: ${snapshot.unifiedSecurityScore.score}/100 | Rules: ${REGEX_RULE_COUNT}`;
   };
 
   refreshSecurityStatus();
@@ -297,7 +297,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
         return;
       }
       clipboardStatusBar.text = "$(shield) Clipboard Guard: Armed";
-      clipboardStatusBar.tooltip = "Rocket AI Shield clipboard middle-layer is active for Copilot chat paste.";
+      clipboardStatusBar.tooltip = "Rocket - IPG clipboard middle-layer is active for Copilot chat paste.";
     }, timeoutMs);
   };
 
@@ -403,7 +403,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     const normalizedQuestion = args.questionText.trim() || "Identify the primary issue and safest remediation.";
 
     const optimizedContent = [
-      "# Rocket AI Shield Copilot Attachment (Optimized)",
+      "# Rocket - IPG Copilot Attachment (Optimized)",
       "",
       `- Query: ${args.query}`,
       `- Provider: ${args.provider}`,
@@ -418,7 +418,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     ].join("\n");
 
     const rawContent = [
-      "# Rocket AI Shield Copilot Attachment (Raw Baseline)",
+      "# Rocket - IPG Copilot Attachment (Raw Baseline)",
       "",
       `- Query: ${args.query}`,
       `- Provider: ${args.provider}`,
@@ -555,7 +555,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     if (cfg.notify || origin === "manual") {
       const actionLabel = tokenizedAndSanitized && inspected.action === "block" ? "tokenized-allow" : effectiveAction;
       vscode.window.showInformationMessage(
-        `Rocket AI Shield clipboard prepared for Copilot chat (${tokenStats.reductionPercent}% reduction, action=${actionLabel}).`
+        `Rocket - IPG clipboard prepared for Copilot chat (${tokenStats.reductionPercent}% reduction, action=${actionLabel}).`
       );
     }
   };
@@ -579,7 +579,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 
     if (clipboardGuardConfig().enabled && clipboardGuardConfig().showBadge) {
       clipboardStatusBar.text = "$(shield) Clipboard Guard: Armed";
-      clipboardStatusBar.tooltip = "Rocket AI Shield clipboard middle-layer is active for Copilot chat paste.";
+      clipboardStatusBar.tooltip = "Rocket - IPG clipboard middle-layer is active for Copilot chat paste.";
       clipboardStatusBar.show();
     } else {
       clipboardStatusBar.hide();
@@ -646,7 +646,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     });
     refreshSecurityStatus();
     vscode.window.showWarningMessage(
-      "Rocket AI Shield: Realtime firewall detected risky content. File was not auto-modified. Use Scan Active Editor and choose Mask/Tokenize."
+      "Rocket - IPG: Realtime firewall detected risky content. File was not auto-modified. Use Scan Current File and choose Mask/Tokenize."
     );
   };
 
@@ -926,7 +926,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
           });
 
     return [
-      "# Rocket AI Shield - Detailed Sensitive Data Scan",
+      "# Rocket - IPG - Detailed Sensitive Data Scan",
       "",
       "## Summary",
       "| File | Decision | Highest Score | Total Findings |",
@@ -978,7 +978,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       );
 
     return [
-      "Rocket AI Shield - Folder Sensitive Data Scan",
+      "Rocket - IPG - Folder Sensitive Data Scan",
       `Folder: ${folderPath}`,
       `Scanned Files: ${scannedFiles}`,
       `Files With Findings: ${hitFiles.length}`,
@@ -1015,7 +1015,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   const scanFolderByPathDetailed = async (folderPath: string): Promise<void> => {
     const trimmed = folderPath.trim();
     if (!trimmed) {
-      vscode.window.showWarningMessage("AI DLP Guard: Folder path is required.");
+      vscode.window.showWarningMessage("Rocket - IPG: Folder path is required.");
       return;
     }
 
@@ -1027,7 +1027,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       const rootUri = vscode.Uri.file(trimmed);
       const rootStat = await vscode.workspace.fs.stat(rootUri);
       if (rootStat.type !== vscode.FileType.Directory) {
-        vscode.window.showWarningMessage("AI DLP Guard: The provided path is not a folder.");
+        vscode.window.showWarningMessage("Rocket - IPG: The provided path is not a folder.");
         return;
       }
 
@@ -1058,7 +1058,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       }
 
       if (!files.length) {
-        vscode.window.showInformationMessage("AI DLP Guard: No eligible files found in folder.");
+        vscode.window.showInformationMessage("Rocket - IPG: No eligible files found in folder.");
         return;
       }
 
@@ -1073,7 +1073,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       await vscode.window.withProgress(
         {
           location: vscode.ProgressLocation.Notification,
-          title: "AI DLP Guard: Scanning folder",
+          title: "Rocket - IPG: Scanning folder",
           cancellable: false
         },
         async (progress) => {
@@ -1139,23 +1139,23 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       });
 
       if (!hitFiles.length) {
-        vscode.window.showInformationMessage(`AI DLP Guard: No sensitive data detected in folder (${scannedFiles} files scanned).`);
+        vscode.window.showInformationMessage(`Rocket - IPG: No sensitive data detected in folder (${scannedFiles} files scanned).`);
         return;
       }
 
       const overallDecision = highestScore > policyEngine.getConfig().blockThreshold ? "BLOCK" : highestScore > policyEngine.getConfig().warnThreshold ? "WARN" : "ALLOW";
       vscode.window.showWarningMessage(
-        `AI DLP Guard folder scan complete: ${hitFiles.length} file(s) with findings, ${totalFindings} total finding(s), decision=${overallDecision}, highest=${highestScore.toFixed(2)}.`
+        `Rocket - IPG folder scan complete: ${hitFiles.length} file(s) with findings, ${totalFindings} total finding(s), decision=${overallDecision}, highest=${highestScore.toFixed(2)}.`
       );
     } catch (error) {
-      vscode.window.showErrorMessage(`AI DLP Guard: Unable to scan folder. ${error instanceof Error ? error.message : "Unknown error"}`);
+      vscode.window.showErrorMessage(`Rocket - IPG: Unable to scan folder. ${error instanceof Error ? error.message : "Unknown error"}`);
     }
   };
 
   const scanFileByPathDetailed = async (filePath: string): Promise<void> => {
     const trimmed = filePath.trim();
     if (!trimmed) {
-      vscode.window.showWarningMessage("AI DLP Guard: File path is required.");
+      vscode.window.showWarningMessage("Rocket - IPG: File path is required.");
       return;
     }
 
@@ -1182,7 +1182,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       }
 
       if (result.findings.length === 0) {
-        vscode.window.showInformationMessage(`AI DLP Guard: No sensitive data detected in ${trimmed}.`);
+        vscode.window.showInformationMessage(`Rocket - IPG: No sensitive data detected in ${trimmed}.`);
         return;
       }
 
@@ -1195,10 +1195,10 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       });
 
       vscode.window.showWarningMessage(
-        `AI DLP Guard: ${result.findings.length} sensitive item(s) found in ${path.basename(trimmed)}. Decision=${result.decision.toUpperCase()} (score ${result.highestScore.toFixed(2)}).`
+        `Rocket - IPG: ${result.findings.length} sensitive item(s) found in ${path.basename(trimmed)}. Decision=${result.decision.toUpperCase()} (score ${result.highestScore.toFixed(2)}).`
       );
     } catch (error) {
-      vscode.window.showErrorMessage(`AI DLP Guard: Unable to scan file. ${error instanceof Error ? error.message : "Unknown error"}`);
+      vscode.window.showErrorMessage(`Rocket - IPG: Unable to scan file. ${error instanceof Error ? error.message : "Unknown error"}`);
     }
   };
 
@@ -1610,7 +1610,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
           const insertScan = scanner.scanTextBlock(change.text, event.document.uri.fsPath, start);
           if (insertScan.decision === "block") {
             vscode.window.showWarningMessage(
-              "Rocket AI Shield: Sensitive content detected in large insertion. Content was not auto-reverted; run Scan Active Editor to mask/tokenize."
+              "Rocket - IPG: Sensitive content detected in large insertion. Content was not auto-reverted; run Scan Current File to mask/tokenize."
             );
           }
         }
@@ -1668,7 +1668,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       );
 
       event.waitUntil(Promise.resolve(edits));
-      vscode.window.showErrorMessage("Rocket AI Shield blocked sensitive save content and applied redaction.");
+      vscode.window.showErrorMessage("Rocket - IPG blocked sensitive save content and applied redaction.");
     })
   );
 
@@ -1691,17 +1691,17 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       const result = scanner.scanTextBlock(combined, event.textEditor.document.uri.fsPath);
       if (result.decision === "warn" || result.decision === "block") {
         vscode.window
-          .showWarningMessage("Rocket AI Shield: Selected text appears sensitive for AI sharing.", "Mask Selection", "Tokenize Selection", "Ignore")
+          .showWarningMessage("Rocket - IPG: Selected text appears sensitive for AI sharing.", "Mask Selection", "Tokenize Selection", "Ignore")
           .then(async (choice) => {
             if (choice === "Mask Selection") {
               const count = await maskSelectionsInEditor(event.textEditor);
               if (count > 0) {
-                vscode.window.showInformationMessage(`Rocket AI Shield: Masked ${count} selected region(s).`);
+                vscode.window.showInformationMessage(`Rocket - IPG: Masked ${count} selected region(s).`);
               }
             } else if (choice === "Tokenize Selection") {
               const count = await tokenizeSelectionsInEditor(event.textEditor);
               if (count > 0) {
-                vscode.window.showInformationMessage(`Rocket AI Shield: Tokenized ${count} selected region(s).`);
+                vscode.window.showInformationMessage(`Rocket - IPG: Tokenized ${count} selected region(s).`);
               }
             }
           });
@@ -1740,20 +1740,20 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     vscode.commands.registerCommand("aiDlpGuard.scanActiveEditor", async () => {
       const editor = resolveEditor();
       if (!editor) {
-        vscode.window.showInformationMessage("AI DLP Guard: No active editor.");
+        vscode.window.showInformationMessage("Rocket - IPG: No active editor.");
         return;
       }
       const scanned = await scanDocumentWithSecurityEngine(editor.document);
       const result = applyScanResult(editor, scanned, "manual-command");
       if (result.findings.length === 0) {
-        vscode.window.showInformationMessage("AI DLP Guard: No sensitive data detected in active editor.");
+        vscode.window.showInformationMessage("Rocket - IPG: No sensitive data detected in active editor.");
         return;
       }
 
       const baseMessage =
         result.decision === "allow"
-          ? `AI DLP Guard: ${result.findings.length} potential sensitive item(s) found (below threshold, score ${result.highestScore.toFixed(2)}).`
-          : `AI DLP Guard: ${result.findings.length} sensitive item(s) found. Decision=${result.decision.toUpperCase()} (score ${result.highestScore.toFixed(2)}).`;
+          ? `Rocket - IPG: ${result.findings.length} potential sensitive item(s) found (below threshold, score ${result.highestScore.toFixed(2)}).`
+          : `Rocket - IPG: ${result.findings.length} sensitive item(s) found. Decision=${result.decision.toUpperCase()} (score ${result.highestScore.toFixed(2)}).`;
 
       const action = await vscode.window.showWarningMessage(baseMessage, "Mask Data", "Tokenize Data", "Open Detailed Findings", "Dismiss");
       if (action === "Mask Data") {
@@ -1761,10 +1761,10 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
         if (maskedCount > 0) {
           const rescanned = await refreshDetailedFindingsAfterEdit(editor, "manual-command");
           vscode.window.showInformationMessage(
-            `AI DLP Guard: Masked ${maskedCount} sensitive value(s) in active editor. Remaining findings: ${rescanned.findings.length}.`
+            `Rocket - IPG: Masked ${maskedCount} sensitive value(s) in active editor. Remaining findings: ${rescanned.findings.length}.`
           );
         } else {
-          vscode.window.showWarningMessage("AI DLP Guard: Could not apply masking to current findings. Try running detailed scan and masking again.");
+          vscode.window.showWarningMessage("Rocket - IPG: Could not apply masking to current findings. Try running detailed scan and masking again.");
         }
       } else if (action === "Tokenize Data") {
         const tokenizedOutcome = await tokenizeFindingsIteratively(editor, result.findings);
@@ -1773,10 +1773,10 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
           const rescanned = await refreshDetailedFindingsAfterEdit(editor, "manual-command");
           const vaultState = tokenVaultConfig().enabled ? " (recoverable via token vault)" : "";
           vscode.window.showInformationMessage(
-            `AI DLP Guard: Tokenized ${tokenizedCount} sensitive value(s) in active editor${vaultState}. Remaining findings: ${rescanned.findings.length}.`
+            `Rocket - IPG: Tokenized ${tokenizedCount} sensitive value(s) in active editor${vaultState}. Remaining findings: ${rescanned.findings.length}.`
           );
         } else {
-          vscode.window.showWarningMessage("AI DLP Guard: Could not apply tokenization to current findings. Try running detailed scan and tokenizing again.");
+          vscode.window.showWarningMessage("Rocket - IPG: Could not apply tokenization to current findings. Try running detailed scan and tokenizing again.");
         }
       } else if (action === "Open Detailed Findings") {
         detailedFindingsDashboard.open({
@@ -1791,20 +1791,20 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     vscode.commands.registerCommand("aiDlpGuard.scanSelection", async () => {
       const editor = resolveEditor();
       if (!editor || editor.selection.isEmpty) {
-        vscode.window.showInformationMessage("AI DLP Guard: Select text to scan.");
+        vscode.window.showInformationMessage("Rocket - IPG: Select text to scan.");
         return;
       }
 
       const text = editor.document.getText(editor.selection);
       const result = await scanTextWithSecurityEngine(text, editor.document.uri.fsPath, editor.selection.start.line);
       if (result.findings.length === 0) {
-        vscode.window.showInformationMessage("AI DLP Guard: No sensitive data detected in selection.");
+        vscode.window.showInformationMessage("Rocket - IPG: No sensitive data detected in selection.");
       } else if (result.decision === "allow") {
         vscode.window.showWarningMessage(
-          `AI DLP Guard: ${result.findings.length} potential sensitive item(s) found in selection (below threshold, score ${result.highestScore.toFixed(2)}).`
+          `Rocket - IPG: ${result.findings.length} potential sensitive item(s) found in selection (below threshold, score ${result.highestScore.toFixed(2)}).`
         );
       } else {
-        vscode.window.showWarningMessage(`AI DLP Guard: Selection risk ${result.decision.toUpperCase()} (score ${result.highestScore.toFixed(2)}).`);
+        vscode.window.showWarningMessage(`Rocket - IPG: Selection risk ${result.decision.toUpperCase()} (score ${result.highestScore.toFixed(2)}).`);
       }
     })
   );
@@ -1813,14 +1813,14 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     vscode.commands.registerCommand("aiDlpGuard.scanActiveEditorDetailed", async () => {
       const editor = resolveEditor();
       if (!editor) {
-        vscode.window.showInformationMessage("AI DLP Guard: No active editor.");
+        vscode.window.showInformationMessage("Rocket - IPG: No active editor.");
         return;
       }
 
       const scanned = await scanDocumentWithSecurityEngine(editor.document);
       const result = applyScanResult(editor, scanned, "manual-detailed-command");
       if (result.findings.length === 0) {
-        vscode.window.showInformationMessage("AI DLP Guard: No sensitive data detected in active editor.");
+        vscode.window.showInformationMessage("Rocket - IPG: No sensitive data detected in active editor.");
         return;
       }
 
@@ -1830,7 +1830,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       });
 
       const action = await vscode.window.showWarningMessage(
-        `AI DLP Guard: ${result.findings.length} sensitive item(s) found in detailed scan.`,
+        `Rocket - IPG: ${result.findings.length} sensitive item(s) found in detailed scan.`,
         "Mask Data",
         "Tokenize Data",
         "Dismiss"
@@ -1841,10 +1841,10 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
         if (maskedCount > 0) {
           const rescanned = await refreshDetailedFindingsAfterEdit(editor, "manual-detailed-command");
           vscode.window.showInformationMessage(
-            `AI DLP Guard: Masked ${maskedCount} sensitive value(s) in active editor. Remaining findings: ${rescanned.findings.length}.`
+            `Rocket - IPG: Masked ${maskedCount} sensitive value(s) in active editor. Remaining findings: ${rescanned.findings.length}.`
           );
         } else {
-          vscode.window.showWarningMessage("AI DLP Guard: Could not apply masking to current findings. Review highlighted ranges and retry.");
+          vscode.window.showWarningMessage("Rocket - IPG: Could not apply masking to current findings. Review highlighted ranges and retry.");
         }
       } else if (action === "Tokenize Data") {
         const tokenizedOutcome = await tokenizeFindingsIteratively(editor, result.findings);
@@ -1853,10 +1853,10 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
           const rescanned = await refreshDetailedFindingsAfterEdit(editor, "manual-detailed-command");
           const vaultState = tokenVaultConfig().enabled ? " (recoverable via token vault)" : "";
           vscode.window.showInformationMessage(
-            `AI DLP Guard: Tokenized ${tokenizedCount} sensitive value(s) in active editor${vaultState}. Remaining findings: ${rescanned.findings.length}.`
+            `Rocket - IPG: Tokenized ${tokenizedCount} sensitive value(s) in active editor${vaultState}. Remaining findings: ${rescanned.findings.length}.`
           );
         } else {
-          vscode.window.showWarningMessage("AI DLP Guard: Could not apply tokenization to current findings. Review highlighted ranges and retry.");
+          vscode.window.showWarningMessage("Rocket - IPG: Could not apply tokenization to current findings. Review highlighted ranges and retry.");
         }
       }
     })
@@ -1900,19 +1900,19 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   context.subscriptions.push(
     vscode.commands.registerCommand("aiDlpGuard.revealSelectedTokenizedData", async () => {
       if (!tokenVaultConfig().enabled) {
-        vscode.window.showWarningMessage("AI DLP Guard: Token vault is disabled. Enable aiDlpGuard.tokenVaultEnabled first.");
+        vscode.window.showWarningMessage("Rocket - IPG: Token vault is disabled. Enable aiDlpGuard.tokenVaultEnabled first.");
         return;
       }
 
       const editor = resolveEditor();
       if (!editor) {
-        vscode.window.showInformationMessage("AI DLP Guard: No active editor.");
+        vscode.window.showInformationMessage("Rocket - IPG: No active editor.");
         return;
       }
 
       const token = selectedTokenValue(editor);
       if (!token) {
-        vscode.window.showInformationMessage("AI DLP Guard: Select a token placeholder like [TOKENIZED_*_001].");
+        vscode.window.showInformationMessage("Rocket - IPG: Select a token placeholder like [TOKENIZED_*_001].");
         return;
       }
 
@@ -1929,13 +1929,13 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 
       const original = await tokenVault.reveal(token);
       if (!original) {
-        vscode.window.showWarningMessage("AI DLP Guard: Original value not found in token vault for this token.");
+        vscode.window.showWarningMessage("Rocket - IPG: Original value not found in token vault for this token.");
         return;
       }
 
       if (action === "Copy To Clipboard") {
         await vscode.env.clipboard.writeText(original);
-        vscode.window.showInformationMessage("AI DLP Guard: Original value copied to clipboard.");
+        vscode.window.showInformationMessage("Rocket - IPG: Original value copied to clipboard.");
         return;
       }
 
@@ -1954,27 +1954,27 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
         }
       }
 
-      vscode.window.showInformationMessage("AI DLP Guard: Original value restored in editor.");
+      vscode.window.showInformationMessage("Rocket - IPG: Original value restored in editor.");
     })
   );
 
   context.subscriptions.push(
     vscode.commands.registerCommand("aiDlpGuard.scanStagedChanges", async () => {
       if (!workspacePath) {
-        vscode.window.showWarningMessage("AI DLP Guard: Open a workspace to scan staged changes.");
+        vscode.window.showWarningMessage("Rocket - IPG: Open a workspace to scan staged changes.");
         return;
       }
 
       const result = await gitScanner.scanStagedChanges(workspacePath);
       if (result.findings === 0) {
-        vscode.window.showInformationMessage("AI DLP Guard: No sensitive content found in staged diff.");
+        vscode.window.showInformationMessage("Rocket - IPG: No sensitive content found in staged diff.");
         return;
       }
 
       if (result.blocked) {
-        vscode.window.showErrorMessage(`AI DLP Guard: Commit risk BLOCK (${result.findings} finding(s), score ${result.highest.toFixed(2)}).`);
+        vscode.window.showErrorMessage(`Rocket - IPG: Commit risk BLOCK (${result.findings} finding(s), score ${result.highest.toFixed(2)}).`);
       } else {
-        vscode.window.showWarningMessage(`AI DLP Guard: Commit risk WARN (${result.findings} finding(s), score ${result.highest.toFixed(2)}).`);
+        vscode.window.showWarningMessage(`Rocket - IPG: Commit risk WARN (${result.findings} finding(s), score ${result.highest.toFixed(2)}).`);
       }
     })
   );
@@ -1982,7 +1982,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   context.subscriptions.push(
     vscode.commands.registerCommand("aiDlpGuard.commitWithScan", async () => {
       if (!workspacePath) {
-        vscode.window.showWarningMessage("AI DLP Guard: Open a workspace to run secure commit.");
+        vscode.window.showWarningMessage("Rocket - IPG: Open a workspace to run secure commit.");
         return;
       }
       await gitScanner.secureCommit(workspacePath);
@@ -1993,7 +1993,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     vscode.commands.registerCommand("rocketAiShield.inspectPrompt", async () => {
       const editor = vscode.window.activeTextEditor;
       if (!editor) {
-        vscode.window.showInformationMessage("Rocket AI Shield: Open an editor first.");
+        vscode.window.showInformationMessage("Rocket - IPG: Open an editor first.");
         return;
       }
 
@@ -2003,7 +2003,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       const prompt =
         selectionText ||
         (await vscode.window.showInputBox({
-          title: "Inspect Prompt",
+          title: "Scan Selected Text",
           prompt: "Enter prompt text to inspect before sending to AI (clipboard text is prefilled when available)",
           value: clipboardText || currentLineText
         }));
@@ -2032,14 +2032,14 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 
       if (inspection.action === "block") {
         vscode.window.showErrorMessage(
-          `Rocket AI Shield blocked prompt (${inspection.riskLabel.toUpperCase()} ${inspection.riskScore}). Safe prompt generated.`
+          `Rocket - IPG blocked prompt (${inspection.riskLabel.toUpperCase()} ${inspection.riskScore}). Safe prompt generated.`
         );
       } else if (inspection.action === "warn") {
         vscode.window.showWarningMessage(
-          `Rocket AI Shield warning (${inspection.riskLabel.toUpperCase()} ${inspection.riskScore}). Prompt tokenized for safety.`
+          `Rocket - IPG warning (${inspection.riskLabel.toUpperCase()} ${inspection.riskScore}). Prompt tokenized for safety.`
         );
       } else {
-        vscode.window.showInformationMessage("Rocket AI Shield: Prompt is safe.");
+        vscode.window.showInformationMessage("Rocket - IPG: Prompt is safe.");
       }
 
       if (optimization.autoOptimizeContext) {
@@ -2104,15 +2104,15 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       refreshSecurityStatus();
 
       if (inspection.action === "block") {
-        vscode.window.showErrorMessage(`Rocket AI Shield blocked response (${inspection.riskLabel.toUpperCase()} ${inspection.riskScore}).`);
+        vscode.window.showErrorMessage(`Rocket - IPG blocked response (${inspection.riskLabel.toUpperCase()} ${inspection.riskScore}).`);
         return;
       }
 
       await vscode.env.clipboard.writeText(inspection.safeResponse);
       if (inspection.action === "warn") {
-        vscode.window.showWarningMessage("Rocket AI Shield flagged response risk. Sanitized/restored response copied to clipboard.");
+        vscode.window.showWarningMessage("Rocket - IPG flagged response risk. Sanitized/restored response copied to clipboard.");
       } else {
-        vscode.window.showInformationMessage("Rocket AI Shield: Response is safe and copied to clipboard.");
+        vscode.window.showInformationMessage("Rocket - IPG: Response is safe and copied to clipboard.");
       }
     })
   );
@@ -2129,12 +2129,12 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       const current = config.get<boolean>("clipboardGuardEnabled", false);
       const next = !current;
       await config.update("clipboardGuardEnabled", next, vscode.ConfigurationTarget.Global);
-      vscode.window.showInformationMessage(`Rocket AI Shield Copilot clipboard guard ${next ? "enabled" : "disabled"}.`);
+      vscode.window.showInformationMessage(`Rocket - IPG Copilot clipboard guard ${next ? "enabled" : "disabled"}.`);
       if (!next) {
         clipboardStatusBar.hide();
       } else {
         clipboardStatusBar.text = "$(shield) Clipboard Guard: Armed";
-        clipboardStatusBar.tooltip = "Rocket AI Shield clipboard middle-layer is active for Copilot chat paste.";
+        clipboardStatusBar.tooltip = "Rocket - IPG clipboard middle-layer is active for Copilot chat paste.";
         clipboardStatusBar.show();
       }
     })
@@ -2143,7 +2143,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   context.subscriptions.push(
     vscode.commands.registerCommand("rocketAiShield.buildSmartContext", async () => {
       if (!workspacePath) {
-        vscode.window.showWarningMessage("Rocket AI Shield: Open workspace to build smart context.");
+        vscode.window.showWarningMessage("Rocket - IPG: Open workspace to build smart context.");
         return;
       }
 
@@ -2172,7 +2172,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 
       if (!query?.trim()) {
         query = "Explain authentication flow";
-        vscode.window.showInformationMessage("Rocket AI Shield: No query entered, using default query 'Explain authentication flow'.");
+        vscode.window.showInformationMessage("Rocket - IPG: No query entered, using default query 'Explain authentication flow'.");
       }
 
       const provider =
@@ -2183,7 +2183,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       await vscode.window.withProgress(
         {
           location: vscode.ProgressLocation.Notification,
-          title: "Rocket AI Shield: Building Smart Context",
+          title: "Rocket - IPG: Building Smart Context",
           cancellable: false
         },
         async (progress) => {
@@ -2354,7 +2354,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
           });
 
           vscode.window.showInformationMessage(
-            `Rocket AI Shield smart context built. Use Copilot '+' to attach ${attachments.optimizedRelative} (optimized) or ${attachments.rawRelative} (raw baseline) with the same question. Estimated payload savings: ${savedBySmartContext} tokens (${reductionBySmartContext}%), approx $${estimatedCreditsSaved}.${securityOverhead > 0 ? ` Security tokenization overhead: +${securityOverhead} tokens.` : ""}`
+            `Rocket - IPG smart context built. Use Copilot '+' to attach ${attachments.optimizedRelative} (optimized) or ${attachments.rawRelative} (raw baseline) with the same question. Estimated payload savings: ${savedBySmartContext} tokens (${reductionBySmartContext}%), approx $${estimatedCreditsSaved}.${securityOverhead > 0 ? ` Security tokenization overhead: +${securityOverhead} tokens.` : ""}`
           );
 
           telemetry.track("optimization.context.build", {
@@ -2379,7 +2379,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     vscode.commands.registerCommand("rocketAiShield.buildSmartContextDebug", async () => {
       try {
         if (!workspacePath) {
-          vscode.window.showWarningMessage("Rocket AI Shield: Open workspace to run Smart Context debug.");
+          vscode.window.showWarningMessage("Rocket - IPG: Open workspace to run Smart Context debug.");
           return;
         }
 
@@ -2398,7 +2398,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
         );
       } catch (error) {
         vscode.window.showErrorMessage(
-          `Rocket AI Shield Smart Context debug failed: ${error instanceof Error ? error.message : "Unknown error"}`
+          `Rocket - IPG Smart Context debug failed: ${error instanceof Error ? error.message : "Unknown error"}`
         );
       }
     })
@@ -2407,11 +2407,11 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   context.subscriptions.push(
     vscode.commands.registerCommand("rocketAiShield.reopenSmartContextPanel", async () => {
       if (!lastSmartContextModel) {
-        vscode.window.showInformationMessage("Rocket AI Shield: No Smart Context report yet. Run 'Build Smart Context' first.");
+        vscode.window.showInformationMessage("Rocket - IPG: No Smart Context report yet. Run 'Build Smart Context' first.");
         return;
       }
       smartContextDashboard.open(lastSmartContextModel);
-      vscode.window.showInformationMessage("Rocket AI Shield: Smart Context panel reopened.");
+      vscode.window.showInformationMessage("Rocket - IPG: Smart Context panel reopened.");
     })
   );
 
@@ -2437,7 +2437,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 
       const doc = await vscode.workspace.openTextDocument({ content: summaryText, language: "text" });
       await vscode.window.showTextDocument(doc, { preview: false, viewColumn: vscode.ViewColumn.Beside });
-      vscode.window.showInformationMessage("Rocket AI Shield token usage analysis generated.");
+      vscode.window.showInformationMessage("Rocket - IPG token usage analysis generated.");
       refreshSecurityStatus();
     })
   );
@@ -2462,7 +2462,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       const compressed = responseCompressor.compress(response);
       const inspected = await responseFirewall.inspectResponse(compressed.optimizedText, provider, userRole(), "optimized-response");
       if (inspected.action === "block") {
-        vscode.window.showErrorMessage("Rocket AI Shield blocked optimized response due to policy risk.");
+        vscode.window.showErrorMessage("Rocket - IPG blocked optimized response due to policy risk.");
         return;
       }
 
@@ -2500,7 +2500,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       });
       refreshSecurityStatus();
       vscode.window.showInformationMessage(
-        `Rocket AI Shield optimized response with ${tokens.reductionPercent}% token reduction. Secure result copied.`
+        `Rocket - IPG optimized response with ${tokens.reductionPercent}% token reduction. Secure result copied.`
       );
     })
   );
@@ -2550,7 +2550,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       refreshSecurityStatus();
 
       vscode.window.showInformationMessage(
-        `Rocket AI Shield AI Red Team Score ${result.score}/100 (${result.band}). Reports: ${exports.jsonPath}, ${exports.csvPath}, ${exports.htmlPath}`
+        `Rocket - IPG AI Red Team Score ${result.score}/100 (${result.band}). Reports: ${exports.jsonPath}, ${exports.csvPath}, ${exports.htmlPath}`
       );
     })
   );
@@ -2576,7 +2576,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       refreshSecurityStatus();
 
       vscode.window.showInformationMessage(
-        `Rocket AI Shield MCP Security Score ${result.score}/100. Reports: ${exports.jsonPath}, ${exports.csvPath}, ${exports.htmlPath}`
+        `Rocket - IPG MCP Security Score ${result.score}/100. Reports: ${exports.jsonPath}, ${exports.csvPath}, ${exports.htmlPath}`
       );
     })
   );
@@ -2601,7 +2601,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       refreshSecurityStatus();
 
       vscode.window.showInformationMessage(
-        `Rocket AI Shield LLM Security Score ${result.score}/100 (${result.band}) [mode=${result.executionMode}; run=${result.runChecksum?.slice(0, 10)}]. Reports: ${exports.jsonPath}, ${exports.csvPath}, ${exports.htmlPath}`
+        `Rocket - IPG LLM Security Score ${result.score}/100 (${result.band}) [mode=${result.executionMode}; run=${result.runChecksum?.slice(0, 10)}]. Reports: ${exports.jsonPath}, ${exports.csvPath}, ${exports.htmlPath}`
       );
     })
   );
@@ -2619,7 +2619,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   context.subscriptions.push(
     vscode.commands.registerCommand("rocketAiShield.scanRepository", async () => {
       if (!workspacePath) {
-        vscode.window.showWarningMessage("Rocket AI Shield: Open workspace to scan repository.");
+        vscode.window.showWarningMessage("Rocket - IPG: Open workspace to scan repository.");
         return;
       }
       const result = await gitScanner.scanRepository(workspacePath);
@@ -2640,7 +2640,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       });
       refreshSecurityStatus();
       vscode.window.showInformationMessage(
-        `Rocket AI Shield repo scan: ${result.findings} finding(s), highest score ${result.highest.toFixed(2)}.`
+        `Rocket - IPG repo scan: ${result.findings} finding(s), highest score ${result.highest.toFixed(2)}.`
       );
     })
   );
@@ -2648,7 +2648,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   context.subscriptions.push(
     vscode.commands.registerCommand("rocketAiShield.scanPullRequest", async () => {
       if (!workspacePath) {
-        vscode.window.showWarningMessage("Rocket AI Shield: Open workspace to scan pull request diff.");
+        vscode.window.showWarningMessage("Rocket - IPG: Open workspace to scan pull request diff.");
         return;
       }
       const base = (await vscode.window.showInputBox({ prompt: "Base ref", value: "HEAD~1" })) ?? "HEAD~1";
@@ -2670,19 +2670,19 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
         details: `PR diff scan findings=${result.findings}; highest=${result.highest.toFixed(2)}`
       });
       refreshSecurityStatus();
-      vscode.window.showInformationMessage(`Rocket AI Shield PR diff scan: ${result.findings} finding(s), highest ${result.highest.toFixed(2)}.`);
+      vscode.window.showInformationMessage(`Rocket - IPG PR diff scan: ${result.findings} finding(s), highest ${result.highest.toFixed(2)}.`);
     })
   );
 
   context.subscriptions.push(
     vscode.commands.registerCommand("rocketAiShield.repositoryHealth", async () => {
       if (!workspacePath) {
-        vscode.window.showWarningMessage("Rocket AI Shield: Open workspace to compute repository health.");
+        vscode.window.showWarningMessage("Rocket - IPG: Open workspace to compute repository health.");
         return;
       }
       const health = await gitScanner.getRepositorySecurityHealth(workspacePath);
       vscode.window.showInformationMessage(
-        `Rocket AI Shield repository health score: ${health.score}/100 | findings=${health.findings} | highest=${health.highest.toFixed(2)}`
+        `Rocket - IPG repository health score: ${health.score}/100 | findings=${health.findings} | highest=${health.highest.toFixed(2)}`
       );
     })
   );
@@ -2690,7 +2690,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   context.subscriptions.push(
     vscode.commands.registerCommand("rocketAiShield.openSocView", async () => {
       if (!workspacePath) {
-        vscode.window.showWarningMessage("Rocket AI Shield: Open workspace to generate SOC view.");
+        vscode.window.showWarningMessage("Rocket - IPG: Open workspace to generate SOC view.");
         return;
       }
       const trend = await gitScanner.getSecretTrendAndDeveloperContribution(workspacePath);
@@ -2710,7 +2710,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
         : vscode.Uri.file(path.join(os.homedir(), "Desktop", "rocket-demo-scenario.txt"));
 
       const demoUri = await vscode.window.showSaveDialog({
-        title: "Rocket AI Shield: Save Demo Scenario",
+        title: "Rocket - IPG: Save Demo Scenario",
         defaultUri,
         filters: {
           "Text Files": ["txt"]
@@ -2757,10 +2757,10 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
         await vscode.workspace.fs.writeFile(demoUri, Buffer.from(payload, "utf8"));
         const doc = await vscode.workspace.openTextDocument(demoUri);
         await vscode.window.showTextDocument(doc, { preview: false });
-        vscode.window.showInformationMessage(`Rocket AI Shield demo scenario generated at ${demoUri.fsPath}`);
+        vscode.window.showInformationMessage(`Rocket - IPG demo scenario generated at ${demoUri.fsPath}`);
       } catch (error) {
         vscode.window.showErrorMessage(
-          `Rocket AI Shield could not generate demo scenario: ${error instanceof Error ? error.message : "Unknown error"}`
+          `Rocket - IPG could not generate demo scenario: ${error instanceof Error ? error.message : "Unknown error"}`
         );
       }
     })
@@ -2770,7 +2770,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     vscode.commands.registerCommand("rocketAiShield.exportAuditJson", async () => {
       const target = path.join(workspacePath ?? ".", "rocket-audit-export.json");
       await auditEngine.exportJson(target);
-      vscode.window.showInformationMessage("Rocket AI Shield audit exported to JSON.");
+      vscode.window.showInformationMessage("Rocket - IPG audit exported to JSON.");
     })
   );
 
@@ -2778,7 +2778,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     vscode.commands.registerCommand("rocketAiShield.exportAuditCsv", async () => {
       const target = path.join(workspacePath ?? ".", "rocket-audit-export.csv");
       await auditEngine.exportCsv(target);
-      vscode.window.showInformationMessage("Rocket AI Shield audit exported to CSV.");
+      vscode.window.showInformationMessage("Rocket - IPG audit exported to CSV.");
     })
   );
 
@@ -2786,7 +2786,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     vscode.commands.registerCommand("rocketAiShield.exportPolicy", async () => {
       const target = path.join(workspacePath ?? ".", "rocket-policy.export.json");
       await policyManager.exportPolicy(target);
-      vscode.window.showInformationMessage("Rocket AI Shield policy exported.");
+      vscode.window.showInformationMessage("Rocket - IPG policy exported.");
     })
   );
 
@@ -2795,9 +2795,9 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       const candidate = path.join(workspacePath ?? ".", "rocket-policy.import.json");
       try {
         await policyManager.importPolicy(candidate);
-        vscode.window.showInformationMessage("Rocket AI Shield policy imported from rocket-policy.import.json.");
+        vscode.window.showInformationMessage("Rocket - IPG policy imported from rocket-policy.import.json.");
       } catch {
-        vscode.window.showWarningMessage("Rocket AI Shield could not import rocket-policy.import.json.");
+        vscode.window.showWarningMessage("Rocket - IPG could not import rocket-policy.import.json.");
       }
     })
   );
@@ -2810,7 +2810,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     const startTime = Date.now();
     const cleanRaw = raw.trim();
     if (!cleanRaw) {
-      vscode.window.showWarningMessage("Rocket AI shield: No content available to optimize.");
+      vscode.window.showWarningMessage("Rocket - IPG: No content available to optimize.");
       return undefined;
     }
 
@@ -2949,7 +2949,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 
     await vscode.env.clipboard.writeText(optimizedPayload);
     vscode.window.showInformationMessage(
-      `Rocket AI shield: ${tokens.originalTokens.toLocaleString()} -> ${tokens.optimizedTokens.toLocaleString()} tokens (${tokens.reductionPercent}% saved). Optimized payload copied.`
+      `Rocket - IPG: ${tokens.originalTokens.toLocaleString()} -> ${tokens.optimizedTokens.toLocaleString()} tokens (${tokens.reductionPercent}% saved). Optimized payload copied.`
     );
 
     return { optimizedPayload, tokens };
@@ -2965,7 +2965,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 
       const editor = resolveEditor();
       if (!editor) {
-        vscode.window.showWarningMessage("Rocket AI shield: No active editor.");
+        vscode.window.showWarningMessage("Rocket - IPG: No active editor.");
         return;
       }
 
@@ -2977,7 +2977,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     vscode.commands.registerCommand("rocketToken.optimizeSelection", async () => {
       const editor = resolveEditor();
       if (!editor || editor.selection.isEmpty) {
-        vscode.window.showWarningMessage("Rocket AI shield: Select text to optimize.");
+        vscode.window.showWarningMessage("Rocket - IPG: Select text to optimize.");
         return;
       }
       const selected = editor.document.getText(editor.selection);
@@ -2989,7 +2989,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     vscode.commands.registerCommand("rocketToken.optimizeActiveFile", async () => {
       const editor = resolveEditor();
       if (!editor) {
-        vscode.window.showWarningMessage("Rocket AI shield: No active editor.");
+        vscode.window.showWarningMessage("Rocket - IPG: No active editor.");
         return;
       }
       await runTokenOptimization(editor.document.getText(), "active-file-optimization", "optimized");
@@ -3000,7 +3000,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     vscode.commands.registerCommand("rocketToken.optimizeActiveFileFullContext", async () => {
       const editor = resolveEditor();
       if (!editor) {
-        vscode.window.showWarningMessage("Rocket AI shield: No active editor.");
+        vscode.window.showWarningMessage("Rocket - IPG: No active editor.");
         return;
       }
       await runTokenOptimization(editor.document.getText(), "active-file-full-context", "full-context");
@@ -3030,7 +3030,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       optimizationMetrics.clear();
       tokenMetricsStore.clear();
       TokenDashboardPanel.refresh();
-      vscode.window.showInformationMessage("Rocket AI shield: Token metrics history cleared.");
+      vscode.window.showInformationMessage("Rocket - IPG: Token metrics history cleared.");
     })
   );
 
@@ -3043,7 +3043,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       });
       const fileUri = uris?.[0];
       if (!fileUri) {
-        vscode.window.showWarningMessage("Rocket AI shield: No file selected.");
+        vscode.window.showWarningMessage("Rocket - IPG: No file selected.");
         return;
       }
 
@@ -3070,7 +3070,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     vscode.commands.registerCommand("rocketToken.analyzeCurrentFile", async () => {
       const editor = resolveEditor();
       if (!editor) {
-        vscode.window.showWarningMessage("Rocket AI shield: No active editor.");
+        vscode.window.showWarningMessage("Rocket - IPG: No active editor.");
         return;
       }
       const query =
@@ -3108,7 +3108,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     }
   });
 
-  vscode.window.showInformationMessage("Rocket AI Shield active: Protect AI. Optimize AI. Govern AI.");
+  vscode.window.showInformationMessage("Rocket - IPG active: Protect AI. Optimize AI. Govern AI.");
 }
 
 export function deactivate(): void {
@@ -3130,8 +3130,8 @@ async function handleEnforcementActions(
 ): Promise<void> {
   const title =
     level === "block"
-      ? `Rocket AI Shield blocked risky content during ${reason}.`
-      : `Rocket AI Shield warning during ${reason}.`;
+      ? `Rocket - IPG blocked risky content during ${reason}.`
+      : `Rocket - IPG warning during ${reason}.`;
 
   const action = await vscode.window.showWarningMessage(title, "Mask Data", "Move to .env", "Ignore Once", "Always Ignore");
 
@@ -3196,7 +3196,7 @@ async function handleEnforcementActions(
 
     const envUri = vscode.Uri.joinPath(folder, ".env");
     const lines = findings.slice(0, 10).map((item, index) => `ROCKET_AI_SHIELD_SECRET_${index + 1}=${item.valueHash.slice(0, 24)}`);
-    const payload = `\n# Added by Rocket AI Shield\n${lines.join("\n")}\n`;
+    const payload = `\n# Added by Rocket - IPG\n${lines.join("\n")}\n`;
 
     try {
       await vscode.workspace.fs.stat(envUri);

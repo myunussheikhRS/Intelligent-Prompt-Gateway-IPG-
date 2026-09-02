@@ -12,7 +12,7 @@ export class ExecutiveDashboard {
     if (!this.panel) {
       this.panel = vscode.window.createWebviewPanel(
         "rocketAiShieldExecutive",
-        "Rocket AI Shield Executive Dashboard",
+        "Rocket - IPG Executive Dashboard",
         vscode.ViewColumn.Beside,
         { enableScripts: false }
       );
@@ -57,7 +57,7 @@ export class ExecutiveDashboard {
 <head>
   <meta charset=\"UTF-8\" />
   <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />
-  <title>Rocket AI Shield</title>
+  <title>Rocket - IPG</title>
   <style>
     :root {
       --bg: #0b1320;

@@ -6,10 +6,10 @@
     "token_IPG - Goodone"
   ],
   "scripts": {
-    "compile:extension": "npm --workspace extension run compile",
-    "compile:token-ipg": "npm --workspace \"token_IPG - Goodone\" run compile",
-    "compile:all": "npm run compile:extension && npm run compile:token-ipg",
-    "test:extension": "npm --workspace extension test",
-    "verify:all": "npm run compile:all && npm run test:extension && echo VERIFICATION_PASSED"
+    "compile:extension": "npm.cmd --workspace extension run compile",
+    "compile:token-ipg": "npm.cmd --workspace \"token_IPG - Goodone\" run compile",
+    "compile:all": "npm.cmd run compile:extension && npm.cmd run compile:token-ipg",
+    "test:extension": "npm.cmd --workspace extension test",
+    "verify:all": "npm.cmd run compile:all && npm.cmd run test:extension && echo VERIFICATION_PASSED"
   }
 }

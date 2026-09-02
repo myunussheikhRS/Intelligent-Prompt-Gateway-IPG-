@@ -1,6 +1,6 @@
 {
   "name": "ai-data-leakage-prevention-guard",
-  "displayName": "Rocket AI Shield",
+  "displayName": "Rocket - IPG",
   "description": "Protect AI. Optimize AI. Govern AI. Local-first AI security and AI cost optimization for prompts, responses, and repositories.",
   "version": "1.0.0",
   "publisher": "local-security",
@@ -55,147 +55,147 @@
     "commands": [
       {
         "command": "aiDlpGuard.openDashboard",
-        "title": "AI DLP Guard: Open Security Dashboard"
+        "title": "Rocket - IPG: Open Security Dashboard"
       },
       {
         "command": "aiDlpGuard.scanActiveEditor",
-        "title": "AI DLP Guard: Scan Active Editor"
+        "title": "Rocket - IPG: Scan Current File"
       },
       {
         "command": "aiDlpGuard.scanActiveEditorDetailed",
-        "title": "AI DLP Guard: Scan Active Editor (Detailed Findings)"
+        "title": "Rocket - IPG: Scan Current file with Dashboard"
       },
       {
         "command": "aiDlpGuard.scanFileByPathDetailed",
-        "title": "AI DLP Guard: Scan Any File Path (Detailed Findings)"
+        "title": "Rocket - IPG: Scan Any File Path (Detailed Findings)"
       },
       {
         "command": "aiDlpGuard.scanFolderByPathDetailed",
-        "title": "AI DLP Guard: Scan Any Folder Path (Detailed Findings)"
+        "title": "Rocket - IPG: Scan Any Folder Path (Detailed Findings)"
       },
       {
         "command": "aiDlpGuard.revealSelectedTokenizedData",
-        "title": "AI DLP Guard: Reveal Selected Tokenized Data"
+        "title": "Rocket - IPG: Reveal Selected Tokenized Data"
       },
       {
         "command": "aiDlpGuard.scanSelection",
-        "title": "AI DLP Guard: Scan Selected Text"
+        "title": "Rocket - IPG: Scan Selected Text"
       },
       {
         "command": "aiDlpGuard.scanStagedChanges",
-        "title": "AI DLP Guard: Scan Staged Changes"
+        "title": "Rocket - IPG: Scan Staged Changes"
       },
       {
         "command": "aiDlpGuard.commitWithScan",
-        "title": "AI DLP Guard: Secure Commit (Scan then Commit)"
+        "title": "Rocket - IPG: Secure Commit (Scan then Commit)"
       },
       {
         "command": "rocketAiShield.openExecutiveDashboard",
-        "title": "Rocket AI Shield: Open Executive Dashboard"
+        "title": "Rocket - IPG: Open Executive Dashboard"
       },
       {
         "command": "rocketAiShield.inspectPrompt",
-        "title": "Rocket AI Shield: Inspect Prompt (Input Firewall)"
+        "title": "Rocket - IPG: Scan Selected Text"
       },
       {
         "command": "rocketAiShield.inspectResponse",
-        "title": "Rocket AI Shield: Inspect AI Response (Output Firewall)"
+        "title": "Rocket - IPG: Inspect AI Response (Output Firewall)"
       },
       {
         "command": "rocketAiShield.prepareClipboardForCopilot",
-        "title": "Rocket AI Shield: Prepare Clipboard For Copilot Chat"
+        "title": "Rocket - IPG: Prepare Clipboard For Copilot Chat"
       },
       {
         "command": "rocketAiShield.toggleCopilotClipboardGuard",
-        "title": "Rocket AI Shield: Toggle Copilot Clipboard Guard"
+        "title": "Rocket - IPG: Toggle Copilot Clipboard Guard"
       },
       {
         "command": "rocketAiShield.scanRepository",
-        "title": "Rocket AI Shield: Scan Entire Repository"
+        "title": "Rocket - IPG: Scan Entire Repository"
       },
       {
         "command": "rocketAiShield.scanPullRequest",
-        "title": "Rocket AI Shield: Scan Pull Request Diff"
+        "title": "Rocket - IPG: Scan Pull Request Diff"
       },
       {
         "command": "rocketAiShield.repositoryHealth",
-        "title": "Rocket AI Shield: Repository Security Health"
+        "title": "Rocket - IPG: Repository Security Health"
       },
       {
         "command": "rocketAiShield.openSocView",
-        "title": "Rocket AI Shield: Open SOC View"
+        "title": "Rocket - IPG: Open SOC View"
       },
       {
         "command": "rocketAiShield.aiRedTeamAssessment",
-        "title": "Rocket AI Shield: AI Red Team Assessment"
+        "title": "Rocket - IPG: AI Red Team Assessment"
       },
       {
         "command": "rocketAiShield.scanMcpServer",
-        "title": "Rocket AI Shield: Scan MCP Server"
+        "title": "Rocket - IPG: Scan MCP Server"
       },
       {
         "command": "rocketAiShield.llmSecurityAssessment",
-        "title": "Rocket AI Shield: LLM Security Assessment"
+        "title": "Rocket - IPG: LLM Security Assessment"
       },
       {
         "command": "rocketAiShield.generateDemoScenario",
-        "title": "Rocket AI Shield: Generate Demo Scenario"
+        "title": "Rocket - IPG: Generate Demo Scenario"
       },
       {
         "command": "rocketAiShield.exportAuditJson",
-        "title": "Rocket AI Shield: Export Audit JSON"
+        "title": "Rocket - IPG: Export Audit JSON"
       },
       {
         "command": "rocketAiShield.exportAuditCsv",
-        "title": "Rocket AI Shield: Export Audit CSV"
+        "title": "Rocket - IPG: Export Audit CSV"
       },
       {
         "command": "rocketAiShield.exportPolicy",
-        "title": "Rocket AI Shield: Export Policy"
+        "title": "Rocket - IPG: Export Policy"
       },
       {
         "command": "rocketAiShield.importPolicy",
-        "title": "Rocket AI Shield: Import Policy"
+        "title": "Rocket - IPG: Import Policy"
       },
       {
         "command": "rocketToken.askOptimized",
-        "title": "Rocket AI shield: Ask Optimized"
+        "title": "Rocket - IPG: Ask Optimized"
       },
       {
         "command": "rocketToken.optimizeSelection",
-        "title": "Rocket AI shield: Optimize Selected Text"
+        "title": "Rocket - IPG: Optimize Selected Text"
       },
       {
         "command": "rocketToken.optimizeActiveFile",
-        "title": "Rocket AI shield: Optimize Active File Context"
+        "title": "Rocket - IPG: Optimize Active File Context"
       },
       {
         "command": "rocketToken.optimizeActiveFileFullContext",
-        "title": "Rocket AI shield: Optimize Active File (Full Context Demo)"
+        "title": "Rocket - IPG: Optimize Active File (Full Context Demo)"
       },
       {
         "command": "rocketToken.openDashboard",
-        "title": "Rocket AI shield: Open Token Dashboard"
+        "title": "Rocket - IPG: Open Token Dashboard"
       },
       {
         "command": "rocketToken.showReductionReport",
-        "title": "Rocket AI shield: Show Last Reduction Report"
+        "title": "Rocket - IPG: Show Last Reduction Report"
       },
       {
         "command": "rocketToken.configureBudgets",
-        "title": "Rocket AI shield: Configure Token Budgets"
+        "title": "Rocket - IPG: Configure Token Budgets"
       },
       {
         "command": "rocketToken.clearMetrics",
-        "title": "Rocket AI shield: Clear Metrics History"
+        "title": "Rocket - IPG: Clear Metrics History"
       },
       {
         "command": "rocketToken.analyzeFile",
-        "title": "Rocket AI shield: Analyze File (Query-Guided)"
+        "title": "Rocket - IPG: Optimize File (Query-Guided)"
       },
       {
         "command": "rocketToken.analyzeCurrentFile",
-        "title": "Rocket AI shield: Analyze Current File"
+        "title": "Rocket - IPG: Optimize Current File"
       }
     ],
     "configuration": {
@@ -253,7 +253,7 @@
             "finance",
             "admin"
           ],
-          "description": "Role used by Rocket AI Shield policy manager for allow/warn/block decisions."
+          "description": "Role used by Rocket - IPG policy manager for allow/warn/block decisions."
         },
         "aiDlpGuard.autoPromptFirewallRealtime": {
           "type": "boolean",
@@ -370,7 +370,7 @@
         "rocketAIShield.clipboardGuardNotify": {
           "type": "boolean",
           "default": true,
-          "description": "Show confirmation notifications when clipboard text is prepared by Rocket AI Shield."
+          "description": "Show confirmation notifications when clipboard text is prepared by Rocket - IPG."
         },
         "rocketAIShield.clipboardGuardShowBadge": {
           "type": "boolean",
@@ -385,7 +385,7 @@
     "compile-tests": "tsc -p ./tsconfig.test.json",
     "watch": "tsc -watch -p ./",
     "lint": "eslint src --ext ts",
-    "pretest": "npm run compile && npm run compile-tests",
+    "pretest": "npm.cmd run compile && npm.cmd run compile-tests",
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {

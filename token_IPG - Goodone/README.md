@@ -1,4 +1,4 @@
-# Rocket AI shield
+# Rocket - IPG
 
 A VS Code extension that reduces the tokens sent to any LLM by intelligently extracting and filtering only the context relevant to your question — before each request.
 
@@ -26,32 +26,32 @@ Instead of sending your full file, chat history, or trace log to the model, this
 
 ## Commands
 
-Open Command Palette (`Ctrl+Shift+P`) and type `rocket ai shield`:
+Open Command Palette (`Ctrl+Shift+P`) and type `rocket - ipg`:
 
 | Command | Best for |
 |---|---|
-| `Rocket AI shield: Ask Optimized` | Ask a question using current editor as context |
-| `Rocket AI shield: Optimize Selected Text` | Analyze only highlighted code or text |
-| `Rocket AI shield: Optimize Active File Context` | Use full active file as context |
-| `Rocket AI shield: Optimize Active File (Full Context Demo)` | One-click mode that keeps full file context (no context focus, no deep compression) |
-| `Rocket AI shield: Analyze File (Query-Guided)` | Pick any file (log, trace, source) and ask a focused question |
-| `Rocket AI shield: Analyze Current File` | Ask about the currently open file without file picker |
-| `Rocket AI shield: Open Token Dashboard` | View token savings, stage breakdown, and optimized prompt |
-| `Rocket AI shield: Show Last Reduction Report` | Quick stats for the most recent request |
-| `Rocket AI shield: Configure Token Budgets` | Open settings for budget and threshold control |
-| `Rocket AI shield: Clear Metrics History` | Reset all stored metrics |
+| `Rocket - IPG: Ask Optimized` | Ask a question using current editor as context |
+| `Rocket - IPG: Optimize Selected Text` | Analyze only highlighted code or text |
+| `Rocket - IPG: Optimize Active File Context` | Use full active file as context |
+| `Rocket - IPG: Optimize Active File (Full Context Demo)` | One-click mode that keeps full file context (no context focus, no deep compression) |
+| `Rocket - IPG: Optimize File (Query-Guided)` | Pick any file (log, trace, source) and ask a focused question |
+| `Rocket - IPG: Optimize Current File` | Ask about the currently open file without file picker |
+| `Rocket - IPG: Open Token Dashboard` | View token savings, stage breakdown, and optimized prompt |
+| `Rocket - IPG: Show Last Reduction Report` | Quick stats for the most recent request |
+| `Rocket - IPG: Configure Token Budgets` | Open settings for budget and threshold control |
+| `Rocket - IPG: Clear Metrics History` | Reset all stored metrics |
 
 ---
 
 ## Demo scenarios
 
 ### 1 — Analyze File (trace / log)
-Open Command Palette → `Analyze File (Query-Guided)` → pick a tcVISION trace file.
+Open Command Palette → `Optimize File (Query-Guided)` → pick a tcVISION trace file.
 Question: `where is the error starting point ?`
 Output: failure timestamp, process fail line, storage dump ASCII with failing payload, RC and Return Message.
 
-### 2 — Analyze Current File
-Open a trace file → `Analyze Current File`.
+### 2 — Optimize Current File
+Open a trace file → `Optimize Current File`.
 Question: `What failed and what is the return code and return message?`
 Output: exception line, RC, Return Message, nearby context.
 

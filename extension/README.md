@@ -1,9 +1,9 @@
-# Rocket AI Shield
+# Rocket - IPG
 
 Protect AI. Optimize AI. Govern AI.
 
-Rocket AI Shield is a local-first VS Code extension for AI Data Leak Prevention and AI Governance.
-It preserves and enhances all existing AI DLP Guard functionality while adding prompt and response firewalls, reversible tokenization, policy-based governance, enterprise audit trail, and executive dashboards.
+Rocket - IPG is a local-first VS Code extension for AI Data Leak Prevention and AI Governance.
+It preserves and enhances all existing Rocket - IPG functionality while adding prompt and response firewalls, reversible tokenization, policy-based governance, enterprise audit trail, and executive dashboards.
 
 ## AI Token Optimization Architecture
 
@@ -103,32 +103,32 @@ LLM Response
 ## Commands
 
 ### Existing
-- `AI DLP Guard: Open Security Dashboard`
-- `AI DLP Guard: Scan Active Editor`
-- `AI DLP Guard: Scan Selected Text`
-- `AI DLP Guard: Scan Staged Changes`
-- `AI DLP Guard: Secure Commit (Scan then Commit)`
+- `Rocket - IPG: Open Security Dashboard`
+- `Rocket - IPG: Scan Current File`
+- `Rocket - IPG: Scan Selected Text`
+- `Rocket - IPG: Scan Staged Changes`
+- `Rocket - IPG: Secure Commit (Scan then Commit)`
 
-### Rocket AI Shield
-- `Rocket AI Shield: Open Executive Dashboard`
-- `Rocket AI Shield: Inspect Prompt (Input Firewall)`
-- `Rocket AI Shield: Inspect AI Response (Output Firewall)`
-- `Rocket AI Shield: AI Red Team Assessment`
-- `Rocket AI Shield: Scan MCP Server`
-- `Rocket AI Shield: LLM Security Assessment`
-- `Rocket AI Shield: Scan Entire Repository`
-- `Rocket AI Shield: Scan Pull Request Diff`
-- `Rocket AI Shield: Repository Security Health`
-- `Rocket AI Shield: Open SOC View`
-- `Rocket AI Shield: Build Smart Context`
-- `Rocket AI Shield: Analyze Token Usage`
-- `Rocket AI Shield: Optimize AI Response`
-- `Rocket AI Shield: Open AI Efficiency Dashboard`
-- `Rocket AI Shield: Generate Demo Scenario`
-- `Rocket AI Shield: Export Audit JSON`
-- `Rocket AI Shield: Export Audit CSV`
-- `Rocket AI Shield: Export Policy`
-- `Rocket AI Shield: Import Policy`
+### Rocket - IPG
+- `Rocket - IPG: Open Executive Dashboard`
+- `Rocket - IPG: Scan Selected Text`
+- `Rocket - IPG: Inspect AI Response (Output Firewall)`
+- `Rocket - IPG: AI Red Team Assessment`
+- `Rocket - IPG: Scan MCP Server`
+- `Rocket - IPG: LLM Security Assessment`
+- `Rocket - IPG: Scan Entire Repository`
+- `Rocket - IPG: Scan Pull Request Diff`
+- `Rocket - IPG: Repository Security Health`
+- `Rocket - IPG: Open SOC View`
+- `Rocket - IPG: Build Smart Context`
+- `Rocket - IPG: Analyze Token Usage`
+- `Rocket - IPG: Optimize AI Response`
+- `Rocket - IPG: Open AI Efficiency Dashboard`
+- `Rocket - IPG: Generate Demo Scenario`
+- `Rocket - IPG: Export Audit JSON`
+- `Rocket - IPG: Export Audit CSV`
+- `Rocket - IPG: Export Policy`
+- `Rocket - IPG: Import Policy`
 
 ## Configuration
 
@@ -161,16 +161,16 @@ Optimization settings:
 
 ## Copilot Chat Middle-Layer Workflow
 
-Rocket AI Shield cannot directly hook into private Copilot network internals, but it provides a practical middle-layer for paste workflows:
+Rocket - IPG cannot directly hook into private Copilot network internals, but it provides a practical middle-layer for paste workflows:
 
 1. Copy prompt/context text.
-2. Rocket AI Shield optimizes and secures clipboard content.
+2. Rocket - IPG optimizes and secures clipboard content.
 3. Paste into Copilot Chat.
 
 Commands:
 
-- `Rocket AI Shield: Prepare Clipboard For Copilot Chat` (manual one-shot)
-- `Rocket AI Shield: Toggle Copilot Clipboard Guard` (continuous auto mode)
+- `Rocket - IPG: Prepare Clipboard For Copilot Chat` (manual one-shot)
+- `Rocket - IPG: Toggle Copilot Clipboard Guard` (continuous auto mode)
 
 When enabled, clipboard content is processed through token optimization and prompt firewall tokenization before paste.
 The status bar shows a live badge with token counts before/after and reduction percentage so users can verify protection before pasting into Copilot chat.
@@ -179,34 +179,34 @@ The status bar shows a live badge with token counts before/after and reduction p
 
 1. Open the `extension` folder in VS Code.
 2. Install dependencies:
-   - `npm install`
+   - `npm.cmd install`
 3. Compile:
-   - `npm run compile`
+   - `npm.cmd run compile`
 4. Press `F5` to launch Extension Development Host.
 
 ## Demo Workflow (Hackathon/Judges)
 
-1. Run `Rocket AI Shield: Generate Demo Scenario`.
-2. Open generated file and run `AI DLP Guard: Scan Active Editor`.
-3. Run `Rocket AI Shield: Inspect Prompt (Input Firewall)` on sensitive prompt text.
+1. Run `Rocket - IPG: Generate Demo Scenario`.
+2. Open generated file and run `Rocket - IPG: Scan Current File`.
+3. Run `Rocket - IPG: Scan Selected Text` on sensitive prompt text.
 4. Confirm risk score and tokenization action.
-5. Run `Rocket AI Shield: Inspect AI Response (Output Firewall)` with a risky SQL or dump response.
-6. Open `Rocket AI Shield: Open Executive Dashboard` for visual metrics and threat feed.
-7. Export artifacts using `Rocket AI Shield: Export Audit JSON` and `Rocket AI Shield: Export Audit CSV`.
+5. Run `Rocket - IPG: Inspect AI Response (Output Firewall)` with a risky SQL or dump response.
+6. Open `Rocket - IPG: Open Executive Dashboard` for visual metrics and threat feed.
+7. Export artifacts using `Rocket - IPG: Export Audit JSON` and `Rocket - IPG: Export Audit CSV`.
 
 ## AI Security Validation Platform
 
-Rocket AI Shield now supports a complete AI Security Validation workflow:
+Rocket - IPG now supports a complete AI Security Validation workflow:
 
-1. `Rocket AI Shield: AI Red Team Assessment`
+1. `Rocket - IPG: AI Red Team Assessment`
 - Runs 100+ attack templates across prompt injection, jailbreaks, exfiltration, impersonation, tool abuse, and RAG attacks.
 - Exports JSON/CSV/HTML reports and logs all findings in audit.
 
-2. `Rocket AI Shield: Scan MCP Server`
+2. `Rocket - IPG: Scan MCP Server`
 - Assesses MCP tools for unsafe definitions, over-privilege, weak auth, prompt injection risk, and data leakage risk.
 - Produces MCP security score and recommendations.
 
-3. `Rocket AI Shield: LLM Security Assessment`
+3. `Rocket - IPG: LLM Security Assessment`
 - Runs model security benchmark cases across injection, leakage, hallucination, unsafe following, toxicity, and compliance risks.
 - Produces LLM security score and recommendations.
 
