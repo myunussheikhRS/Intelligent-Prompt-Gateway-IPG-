@@ -4,6 +4,13 @@ export interface StageSaving {
   savedTokens: number;
 }
 
+export interface SecuritySummary {
+  scanDecision: "allow" | "warn" | "block";
+  sensitiveFound: number;
+  tokenizedCount: number;
+  remainingFindings: number;
+}
+
 export interface MetricRecord {
   id: string;
   timestamp: number;
@@ -16,4 +23,5 @@ export interface MetricRecord {
   preprocessLatencyMs: number;
   optimizedPrompt: string;
   stageSavings?: StageSaving[];
+  securitySummary?: SecuritySummary;
 }

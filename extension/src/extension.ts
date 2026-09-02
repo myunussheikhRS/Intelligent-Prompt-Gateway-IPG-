@@ -35,6 +35,7 @@ import { Scanner } from "./scanner";
 import { mockAssessmentRecords } from "./security/mockAssessmentData";
 import { DashboardPanel as TokenDashboardPanel } from "./tokenIpG/dashboardPanel";
 import { MetricsStore as TokenMetricsStore } from "./tokenIpG/metricsStore";
+import { SecuritySummary } from "./tokenIpG/types";
 import { FindingSource, ScanMetrics, ScanResult } from "./types";
 import { DashboardPanel as SecurityDashboardPanel } from "./ui/dashboard";
 import { DetailedFindingsDashboardPanel } from "./ui/findingsDashboard";
@@ -450,9 +451,13 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     return promptUri;
   };
 
-  const openNewChatForSavedPrompt = async (query: string, promptUri: vscode.Uri): Promise<void> => {
-    const savedPath = vscode.workspace.asRelativePath(promptUri, false);
-    const chatPrompt = `${query}\n\nUse the optimized prompt context saved in ${savedPath}.`;
+  const openNewChatForSavedPrompt = async (
+    query: string,
+    promptUri: vscode.Uri | undefined,
+    includeSavedContextReference = true
+  ): Promise<void> => {
+    const savedPath = promptUri ? vscode.workspace.asRelativePath(promptUri, false) : "";
+    const chatPrompt = includeSavedContextReference && savedPath ? `${query}\n\nUse the optimized prompt context saved in ${savedPath}.` : query;
 
     try {
       await vscode.commands.executeCommand("workbench.action.chat.newChat");
@@ -461,6 +466,20 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       await vscode.env.clipboard.writeText(chatPrompt);
       vscode.window.showWarningMessage(
         "Optimized prompt saved, but Copilot Chat could not be opened automatically. The chat prompt was copied to clipboard."
+      );
+    }
+  };
+
+  const openNewChatWithInlineContext = async (query: string, optimizedContext: string): Promise<void> => {
+    const chatPrompt = `${query}\n\nOptimized context:\n${optimizedContext}`;
+
+    try {
+      await vscode.commands.executeCommand("workbench.action.chat.newChat");
+      await vscode.commands.executeCommand("workbench.action.chat.open", { query: chatPrompt });
+    } catch {
+      await vscode.env.clipboard.writeText(chatPrompt);
+      vscode.window.showWarningMessage(
+        "Optimized prompt prepared, but Copilot Chat could not be opened automatically. The full prompt was copied to clipboard."
       );
     }
   };
@@ -2805,7 +2824,9 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   const runTokenOptimization = async (
     raw: string,
     query: string,
-    mode: "optimized" | "full-context"
+    mode: "optimized" | "full-context",
+    extraStages: string[] = [],
+    securitySummary?: SecuritySummary
   ): Promise<{ optimizedPayload: string; tokens: ReturnType<TokenAnalyzer["summarize"]> } | undefined> => {
     const startTime = Date.now();
     const cleanRaw = raw.trim();
@@ -2932,7 +2953,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       largestFile: "active-context"
     });
 
-    const stageLabels = mode === "full-context" ? ["Full Context"] : ["Targeted Extraction", ...stagesUsed];
+    const stageLabels = mode === "full-context" ? ["Full Context", ...extraStages] : ["Targeted Extraction", ...stagesUsed, ...extraStages];
     tokenMetricsStore.add({
       id: Date.now().toString(36),
       timestamp: Date.now(),
@@ -2943,7 +2964,8 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       reductionPercent: tokens.reductionPercent,
       stagesUsed: stageLabels,
       preprocessLatencyMs: Math.max(1, Date.now() - startTime),
-      optimizedPrompt: optimizedPayload
+      optimizedPrompt: optimizedPayload,
+      securitySummary
     });
     TokenDashboardPanel.refresh();
 
@@ -3073,11 +3095,13 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
         vscode.window.showWarningMessage("Rocket - IPG: No active editor.");
         return;
       }
+
       const query =
         (await vscode.window.showInputBox({
           prompt: "What do you want to know about this file?",
           placeHolder: "e.g. Why is this block slow?"
         })) ?? "Find root cause and key error lines";
+
       const optimized = await runTokenOptimization(editor.document.getText(), query, "optimized");
       if (!optimized) {
         return;
@@ -3085,8 +3109,97 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 
       const filePath = editor.document.uri.fsPath;
       const promptUri = await saveTokenOptimizedPrompt(optimized.optimizedPayload, filePath);
-      await vscode.window.showTextDocument(promptUri, { viewColumn: vscode.ViewColumn.One, preview: false });
-      await openNewChatForSavedPrompt(query, promptUri);
+      await vscode.window.showTextDocument(promptUri, {
+        viewColumn: editor.viewColumn ?? vscode.ViewColumn.One,
+        preview: false
+      });
+
+      vscode.window.showInformationMessage("Rocket AI shield: Optimized file created and opened in current tab.");
+      await openNewChatForSavedPrompt(query, undefined, false);
+
+      TokenDashboardPanel.show(context, tokenMetricsStore);
+    })
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand("rocketToken.maskAndOptimizeCurrentFile", async () => {
+      const editor = resolveEditor();
+      if (!editor) {
+        vscode.window.showWarningMessage("Rocket AI shield: No active editor.");
+        return;
+      }
+
+      const scanned = await scanDocumentWithSecurityEngine(editor.document);
+      const securityResult = applyScanResult(editor, scanned, "mask-optimize-current-file");
+      const securityStages: string[] = ["Active Scan"];
+      let remainingFindings = securityResult.findings.length;
+      let tokenizedCount = 0;
+      let finalDecision: "allow" | "warn" | "block" = securityResult.decision;
+
+      if (securityResult.findings.length > 0) {
+        const tokenizedOutcome = await tokenizeFindingsIteratively(editor, securityResult.findings);
+        tokenizedCount = tokenizedOutcome.tokenizedCount;
+        securityStages.push(`Findings ${securityResult.findings.length}`);
+        securityStages.push(`Tokenized ${tokenizedCount}`);
+        remainingFindings = tokenizedOutcome.remaining;
+
+        if (tokenizedCount > 0) {
+          const rescanned = await scanDocumentWithSecurityEngine(editor.document);
+          remainingFindings = rescanned.findings.length;
+          finalDecision = rescanned.decision;
+          highlightManager.apply(editor, rescanned.findings, policyEngine.getConfig().blockThreshold);
+          const vaultState = tokenVaultConfig().enabled ? " (recoverable via token vault)" : "";
+          vscode.window.showInformationMessage(
+            `Rocket AI shield: Active scan found ${securityResult.findings.length} sensitive item(s). Tokenized ${tokenizedCount}${vaultState}. Remaining findings: ${remainingFindings}.`
+          );
+        } else if (securityResult.decision === "block") {
+          vscode.window.showErrorMessage(
+            "Rocket AI shield: Active scan found sensitive data, but tokenization could not be applied. Review with 'AI DLP Guard: Scan Active Editor (Detailed Findings)'."
+          );
+          return;
+        } else {
+          vscode.window.showWarningMessage(
+            "Rocket AI shield: Active scan found sensitive data, but no ranges could be tokenized automatically. Continuing with current file content."
+          );
+        }
+      } else {
+        securityStages.push("Findings 0");
+        finalDecision = "allow";
+      }
+
+      securityStages.push(`Remaining ${remainingFindings}`);
+
+      const query =
+        (await vscode.window.showInputBox({
+          prompt: "What do you want to know about this file?",
+          placeHolder: "e.g. Why is this block slow?"
+        })) ?? "Find root cause and key error lines";
+
+      const securitySummary: SecuritySummary = {
+        scanDecision: remainingFindings > 0 ? finalDecision : "allow",
+        sensitiveFound: securityResult.findings.length,
+        tokenizedCount: Math.max(0, securityResult.findings.length - remainingFindings),
+        remainingFindings
+      };
+
+      const optimized = await runTokenOptimization(editor.document.getText(), query, "optimized", securityStages, securitySummary);
+      if (!optimized) {
+        return;
+      }
+
+      const fullRange = new vscode.Range(editor.document.positionAt(0), editor.document.positionAt(editor.document.getText().length));
+      const applied = await editor.edit((editBuilder) => {
+        editBuilder.replace(fullRange, optimized.optimizedPayload);
+      });
+
+      if (!applied) {
+        vscode.window.showWarningMessage("Rocket AI shield: Could not apply optimized output to the current file.");
+        return;
+      }
+
+      vscode.window.showInformationMessage("Rocket AI shield: Optimized output applied to the current file.");
+      await openNewChatForSavedPrompt(query, undefined, false);
+
       TokenDashboardPanel.show(context, tokenMetricsStore);
     })
   );

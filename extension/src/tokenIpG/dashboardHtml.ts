@@ -3,7 +3,8 @@ import { MetricRecord } from "./types";
 import { MetricsStore } from "./metricsStore";
 
 export function buildDashboardHtml(
-  records: MetricRecord[]
+  records: MetricRecord[],
+  summary: ReturnType<MetricsStore["getSessionSummary"]>
 ): string {
   if (records.length === 0) {
     return noDataHtml();
@@ -28,6 +29,17 @@ export function buildDashboardHtml(
         const savedClass = rawSaved > 0 ? "positive" : "neutral";
         const reductionClass = rawReduction >= 40 ? "great" : rawReduction >= 15 ? "good" : "ok";
         const bar = Math.max(0, Math.min(100, rawReduction));
+        const security = r.securitySummary;
+        const securityDetails = security
+          ? `
+        <div class="security-row">
+          <div class="sec-item"><span class="slabel">Sensitive Found</span><span class="sval">${security.sensitiveFound}</span></div>
+          <div class="sec-item"><span class="slabel">Masked/Tokenized</span><span class="sval">${security.tokenizedCount}</span></div>
+          <div class="sec-item"><span class="slabel">Remaining</span><span class="sval">${security.remainingFindings}</span></div>
+          <div class="sec-item"><span class="slabel">Scan Decision</span><span class="sval">${security.scanDecision.toUpperCase()}</span></div>
+        </div>
+        `
+          : "";
         return `
       <div class="qcard latest">
         <div class="qcard-header">
@@ -48,27 +60,39 @@ export function buildDashboardHtml(
           <span class="cost-item">After optimize: <strong>$${costAfter.toFixed(4)}</strong></span>
           <span class="cost-badge">Credit saved: <strong>$${creditSaved.toFixed(4)}</strong></span>
         </div>
+        ${securityDetails}
         <div class="qsteps">${r.stagesUsed.map((s) => `<span class="step">${s}</span>`).join("<span class='arrow'>-></span>")}</div>
       </div>
     `;
       })()
     : `<p class="no-data">No questions yet.</p>`;
 
+  const totalSaved = summary ? summary.totalTokensSaved.toLocaleString() : "-";
+  const avgReduction = summary ? `${summary.avgReductionPercent}%` : "-";
+  const costSaved = summary ? `$${summary.estimatedCostSavedUSD.toFixed(4)}` : "-";
+
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rocket - IPG : Token Optimizer</title>
+<title>Rocket IPG Security and Token Dashboard</title>
 <style>
   * { box-sizing: border-box; }
   body { font-family: var(--vscode-font-family); background: var(--vscode-editor-background); color: var(--vscode-editor-foreground); padding: 0; margin: 0; display: flex; flex-direction: column; height: 100vh; }
   .header { padding: 12px 20px; border-bottom: 1px solid var(--vscode-editorWidget-border); }
   h1 { font-size: 1.2rem; margin: 0 0 2px 0; }
   .subtitle { font-size: 0.75rem; color: var(--vscode-descriptionForeground); margin: 0; }
-  .content { flex: 1; min-height: 0; overflow: auto; padding: 16px 20px 20px; display: flex; flex-direction: column; }
-  h2 { font-size: 1rem; margin: 0 0 14px 0; color: var(--vscode-descriptionForeground); text-transform: uppercase; letter-spacing: 0.05em; flex-shrink: 0; }
-  .qcard { background: var(--vscode-editorWidget-background); border: 1px solid var(--vscode-editorWidget-border); border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; flex: 0 0 auto; height: auto; }
+  .topbar { display: flex; align-items: center; gap: 8px; flex-wrap: nowrap; padding: 8px 20px; border-bottom: 1px solid var(--vscode-editorWidget-border); background: var(--vscode-editor-background); overflow-x: auto; }
+  .totals { display: flex; gap: 8px; flex-wrap: nowrap; }
+  .tot { background: transparent; border: 1px solid var(--vscode-editorWidget-border); border-radius: 6px; padding: 6px 12px; display: flex; flex-direction: column; white-space: nowrap; flex-shrink: 0; }
+  .tot.hl { border-color: #4ec9b0; }
+  .tot.current { border-color: #569cd6; }
+  .tot .tl { font-size: 0.65rem; color: var(--vscode-descriptionForeground); }
+  .tot .tv { font-size: 1rem; font-weight: 700; }
+  .content { flex: 1; overflow: auto; padding: 20px; }
+  h2 { font-size: 0.9rem; margin: 0 0 12px 0; color: var(--vscode-descriptionForeground); text-transform: uppercase; letter-spacing: 0.05em; }
+  .qcard { background: var(--vscode-editorWidget-background); border: 1px solid var(--vscode-editorWidget-border); border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; height: 100%; }
   .qcard.latest { border-color: #4ec9b0; }
   .qcard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-shrink: 0; }
   .qtime { font-size: 0.72rem; color: var(--vscode-descriptionForeground); }
@@ -91,12 +115,22 @@ export function buildDashboardHtml(
   .cost-item { color: var(--vscode-descriptionForeground); }
   .cost-arrow { color: var(--vscode-descriptionForeground); }
   .cost-badge { margin-left: auto; color: #4ec9b0; font-size: 0.78rem; }
+  .security-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; padding: 8px 10px; background: var(--vscode-editor-background); border: 1px solid var(--vscode-editorWidget-border); border-radius: 6px; }
+  .sec-item { display: flex; flex-direction: column; min-width: 130px; }
 </style>
 </head>
 <body>
 <div class="header">
-  <h1>AI Token Optimizer</h1>
-  <p class="subtitle">Per-question token reduction</p>
+  <h1>Rocket IPG Security and Token Dashboard</h1>
+  <p class="subtitle">Per-run sensitive data protection and token reduction</p>
+</div>
+<div class="topbar">
+  <div class="totals">
+    <div class="tot hl"><span class="tl">Total Saved</span><span class="tv">${totalSaved}</span></div>
+    <div class="tot hl"><span class="tl">Avg Reduction</span><span class="tv">${avgReduction}</span></div>
+    <div class="tot current"><span class="tl">Current Saved</span><span class="tv">${currentSaved}</span></div>
+    <div class="tot"><span class="tl">Cost Saved</span><span class="tv">${costSaved}</span></div>
+  </div>
 </div>
 <div class="content">
 <h2>Details</h2>
@@ -112,6 +146,6 @@ function escHtml(input: string): string {
 
 function noDataHtml(): string {
   return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
-  <style>body{font-family:var(--vscode-font-family);background:var(--vscode-editor-background);color:var(--vscode-editor-foreground);padding:40px;text-align:center;margin:0;}p{color:var(--vscode-descriptionForeground);margin:10px 0 0 0;}</style>
-  </head><body><p style="margin-top:60px;">No questions yet. Run <strong>Optimize File</strong> or <strong>Ask Optimized</strong> to start.</p></body></html>`;
+  <style>body{font-family:var(--vscode-font-family);background:var(--vscode-editor-background);color:var(--vscode-editor-foreground);padding:40px;text-align:center;margin:0;}.header{padding:12px 20px;border-bottom:1px solid var(--vscode-editorWidget-border);}h1{font-size:1.2rem;margin:0;}p{color:var(--vscode-descriptionForeground);margin:10px 0 0 0;}</style>
+  </head><body><div class="header"><h1>Rocket IPG Security and Token Dashboard</h1><p>Per-run sensitive data protection and token reduction</p></div><p style="margin-top:60px;">No questions yet. Run <strong>Analyze File</strong> or <strong>Ask Optimized</strong> to start.</p></body></html>`;
 }
